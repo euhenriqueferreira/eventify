@@ -3,7 +3,7 @@
     'data'
 ])
 
-<div>
+<div {{ $attributes }}>
     @if($title)
         <h2 class="text-base font-normal">{{ $title }}</h2>
     @endif

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Event;
+use App\Models\Subscriber;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,7 +28,11 @@ class DatabaseSeeder extends Seeder
         ])->each(function($user){
             Event::factory()->count(5)->create([
                 'user_id' => $user->id,
-            ]);
+            ])->each(function($event){
+                Subscriber::factory()->count(rand(5, 25))->create([
+                    'event_id' => $event->id,
+                ]);
+            });
         });
     }
 }

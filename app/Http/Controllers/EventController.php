@@ -62,6 +62,7 @@ class EventController extends Controller
         return view('events.show', [
             'event' => $event,
             'userOwner' => $event->user == auth()->user(),
+            'currentUserSubscribed' => $event->subscribers()->where('id', '=', auth()->user()->id)->get(),
         ]);
     }
 
