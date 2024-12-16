@@ -18,10 +18,10 @@
             @foreach ($events as $event)
                 <tr>
                     <x-table.td>{{ $event->name }}</x-table.td>
-                    <x-table.td>{{ $event->datetime }}</x-table.td>
+                    <x-table.td>{{  $event->datetime }}</x-table.td>
                     <x-table.td>{{ $event->localization }}</x-table.td>
                     <x-table.td>
-                        <x-button.anchor :href="route('events.index')" solid>
+                        <x-button.anchor :href="route('events.show', $event)" solid>
                             {{ __('See more') }}
                         </x-button.anchor>
                     </x-table.td>

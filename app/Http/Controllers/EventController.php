@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class EventController extends Controller
                 ->where(function(Builder $query) use($search){
                     $query->where('name', 'like', "%$search%")
                     ->orWhere('localization', 'like', "%$search%");
-                })
+                })->orderBy('created_at', 'desc')
                 ->paginate(7)->withQueryString(),
         ]);
     }
@@ -58,7 +59,14 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $dateFormat = Carbon::parse($event->datetime)->format('d/m/y - H:i');
+        $numberFormat = number_format($event->capacity, 0, ',', '.');
+        $event->datetime = $dateFormat;
+        $event->capacity = $numberFormat;
+
+        return view('events.show', [
+            'event' => $event,
+        ]);
     }
 
     /**
