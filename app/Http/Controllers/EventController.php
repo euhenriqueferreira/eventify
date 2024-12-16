@@ -59,13 +59,9 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $dateFormat = Carbon::parse($event->datetime)->format('d/m/y - H:i');
-        $numberFormat = number_format($event->capacity, 0, ',', '.');
-        $event->datetime = $dateFormat;
-        $event->capacity = $numberFormat;
-
         return view('events.show', [
             'event' => $event,
+            'userOwner' => $event->user == auth()->user(),
         ]);
     }
 
@@ -90,6 +86,8 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+
+        return to_route('events.index');
     }
 }
