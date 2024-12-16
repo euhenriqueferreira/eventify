@@ -21,7 +21,7 @@ class EventController extends Controller
                     $query->where('name', 'like', "%$search%")
                     ->orWhere('localization', 'like', "%$search%");
                 })
-                ->paginate(5)->withQueryString(),
+                ->paginate(7)->withQueryString(),
         ]);
     }
 
@@ -38,7 +38,19 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        dd(request()->all());
+        $data = $request->validate([
+            'name' =>['required', ],
+            'capacity' =>['required', 'integer'],
+            'datetime' =>['required', 'date'],
+            'localization' =>['required', 'min:3', 'max:255'],
+            'description' =>['required', 'min:10'],
+        ]);
+
+        Event::create(array_merge($data, [
+            'user_id' => auth()->user()->id,
+        ]));
+
+        return to_route('events.index');
     }
 
     /**

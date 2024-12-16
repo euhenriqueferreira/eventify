@@ -7,7 +7,7 @@
 
     <x-container>
         <div class="mb-6 flex justify-between items-center">
-            <x-buttons.anchor :href="route('events.create')" outline>Create an Event</x-buttons.anchor>
+            <x-button.anchor :href="route('events.create')" outline>Create an Event</x-button.anchor>
 
             <x-form class="w-2/5">
                 <x-input.search name="search" placeholder="Search" />
@@ -21,9 +21,9 @@
                     <x-table.td>{{ $event->datetime }}</x-table.td>
                     <x-table.td>{{ $event->localization }}</x-table.td>
                     <x-table.td>
-                        <x-buttons.anchor :href="route('events.index')" solid>
+                        <x-button.anchor :href="route('events.index')" solid>
                             {{ __('See more') }}
-                        </x-buttons.anchor>
+                        </x-button.anchor>
                     </x-table.td>
                 </tr>
             @endforeach
