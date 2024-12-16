@@ -8,5 +8,9 @@
 @endphp
 
 <form {{ $attributes }} action="{{ $route }}" method="{{ $method }}">
+    @if($method !== 'GET')
+        @csrf
+    @endif
+    
     {{ $slot }}
 </form>
