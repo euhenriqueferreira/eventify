@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -12,8 +13,15 @@ class EventController extends Controller
      */
     public function index()
     {
+        $search = request()->search;
+
         return view('dashboard', [
-            'events' => Event::query()->paginate(5),
+            'events' => Event::query()
+                ->where(function(Builder $query) use($search){
+                    $query->where('name', 'like', "%$search%")
+                    ->orWhere('localization', 'like', "%$search%");
+                })
+                ->paginate(5)->withQueryString(),
         ]);
     }
 
